@@ -1,3 +1,34 @@
 /* tailwind css and daisyUI */
 @import "tailwindcss";
-@plugin "daisyui";
+@plugin "daisyui" {
+  themes: light --default;
+}
+
+/* KrishiLink Color Palette
+Primary Color (Brand Green)
+✔ Primary
+Hex: #22C55E
+A fresh, bright green inspired by crops, plants, and growth.
+
+Secondary Color (Deep Agro Green)
+✔ Secondary
+Hex: #14532D
+A strong, dark green that creates contrast and represents nature, soil, and stability.
+
+Optional Supporting Colors (Recommended)
+✔ Accent
+Hex: #4ADE80
+Light green for hover, highlights, soft accents.
+
+✔ Neutral Dark
+Hex: #0F172A
+Great for dark backgrounds (footer, header).
+
+✔ Soft Background
+Hex: #F1F5F9
+Clean UI sections and backgrounds. */
+.secondary {
+  @apply text-[#14532D] font-medium;
+}
+
+/* form related tailwind class */
