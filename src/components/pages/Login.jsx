@@ -3,20 +3,21 @@ import { AuthContext } from "../contextapis/Context";
 import { Link, useNavigate } from "react-router";
 
 const Login = () => {
-  const { login } = use(AuthContext);
+  const { user, setUser, login } = use(AuthContext);
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
     const name = e.target.name?.value;
     const email = e.target.email.value;
-    const photo = e.target.photoUrl?.value;
+    const photoURL = e.target.photoUrl?.value;
     const password = e.target.password.value;
 
-    login(email, password).then((result) => {
-      console.log(result);
-      navigate("/");
-    });
+    login(name, email, photoURL, password)
+      .then((user) => {
+        navigate("/");
+      })
+      .catch((err) => {});
   };
 
   return (

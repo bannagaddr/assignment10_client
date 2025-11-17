@@ -32,3 +32,8 @@ Clean UI sections and backgrounds. */
 }
 
 /* form related tailwind class */
+
+/* navbar related */
+a.active {
+  @apply bg-[#22C55E] text-white;
+}

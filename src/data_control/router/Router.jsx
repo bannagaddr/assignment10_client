@@ -7,6 +7,9 @@ import AllCropPost from "../../components/pages/AllCropPost";
 import Registration from "../../components/pages/Registration";
 import Login from "../../components/pages/Login";
 import AddCrop from "../../components/pages/AddCrop";
+import CropsDetails from "../../components/pages/CropsDetails";
+import PrivateRouter from "./PrivateRouter";
+import LatestCropPost from "../../components/pages/LatestCropPost";
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +32,16 @@ export const router = createBrowserRouter([
       {
         path: "/add-crop",
         element: <AddCrop></AddCrop>,
+      },
+      {
+        path: "/crops-details/:id",
+        element: (
+          <PrivateRouter>
+            <CropsDetails></CropsDetails>
+          </PrivateRouter>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/crops/${params.id}`),
       },
       {
         path: "/register",

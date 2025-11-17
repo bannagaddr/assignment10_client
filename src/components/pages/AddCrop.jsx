@@ -1,63 +1,107 @@
-import React from "react";
+import React, { use } from "react";
+import { AuthContext } from "../contextapis/Context";
+import "../../index.css";
 
 const AddCrop = () => {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-6">
-        <h2 className="text-2xl font-bold text-center mb-6">
-          Submit Your Interest
-        </h2>
+  const { user } = use(AuthContext);
 
-        <div className="mb-4">
-          <label className="block font-semibold mb-1">Quantity</label>
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const formData = {
+      name: e.target.name.value,
+      type: e.target.type.value,
+      price: e.target.price.value,
+      unit: e.target.unit.value,
+      quantity: e.target.quantity.value,
+      location: e.target.location.value,
+      photo: e.target.photo.value,
+      description: e.target.description.value,
+      interests: [],
+      owner: {
+        _id: user.uid,
+        ownerEmail: user.email,
+        ownerName: user.displayName,
+      },
+    };
+
+    // formData send request to the server
+    fetch("http://localhost:3000/crops", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
+    console.log(formData);
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+      <div className="w-full max-w-lg bg-white rounded-2xl shadow-lg p-6 space-y-4">
+        <h2 className="text-2xl font-semibold text-center">Add New Crop</h2>
+
+        <form onSubmit={handleSubmit} className="grid gap-4">
+          <input
+            type="text"
+            name="name"
+            placeholder="Crop Name"
+            className="w-full border-2 border-[#9a9a9a] p-3 rounded-xl focus:ring focus:ring-[#22C55E] focus:border-[#22C55E] outline-none"
+          />
+          <input
+            type="text"
+            name="type"
+            placeholder="Type"
+            className="w-full border-2 border-[#9a9a9a] p-3 rounded-xl focus:ring focus:ring-[#22C55E] focus:border-[#22C55E] outline-none"
+          />
+
           <input
             type="number"
-            placeholder="Enter quantity"
-            className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
+            name="price"
+            placeholder="Price per unit"
+            className="w-full border-2 border-[#9a9a9a] p-3 rounded-xl focus:ring focus:ring-[#22C55E] focus:border-[#22C55E] outline-none"
           />
-        </div>
 
-        <div className="mb-4">
-          <label className="block font-semibold mb-1">Message</label>
+          <input
+            type="number"
+            name="unit"
+            placeholder="Unit Kg, Ton, bag"
+            className="w-full border-2 border-[#9a9a9a] p-3 rounded-xl focus:ring focus:ring-[#22C55E] focus:border-[#22C55E] outline-none"
+          />
+          <input
+            type="number"
+            name="quantity"
+            placeholder="Estimated quantity"
+            className="w-full border-2 border-[#9a9a9a] p-3 rounded-xl focus:ring focus:ring-[#22C55E] focus:border-[#22C55E] outline-none"
+          />
+
           <input
             type="text"
-            placeholder="Enter message"
-            className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
+            name="location"
+            placeholder="Location"
+            className="w-full border-2 border-[#9a9a9a] p-3 rounded-xl focus:ring focus:ring-[#22C55E] focus:border-[#22C55E] outline-none"
           />
-        </div>
 
-        <div className="mb-6">
-          <label className="block font-semibold mb-1">Total Price</label>
           <input
             type="text"
-            placeholder="Auto-calculated"
-            disabled
-            className="w-full px-3 py-2 border border-gray-200 rounded-xl bg-gray-100"
+            name="photo"
+            placeholder="Image URL"
+            className="w-full border-2 border-[#9a9a9a] p-3 rounded-xl focus:ring focus:ring-[#22C55E] focus:border-[#22C55E] outline-none"
           />
-        </div>
 
-        <button className="w-full py-3 bg-green-600 text-white rounded-xl font-semibold text-lg hover:bg-green-700 transition">
-          Submit Interest
-        </button>
+          <textarea
+            placeholder="Description"
+            name="description"
+            className="w-full border-2 border-[#9a9a9a] p-3 rounded-xl focus:ring focus:ring-[#22C55E] focus:border-[#22C55E] outline-none"
+          />
 
-        <div className="hidden md:block mt-6">
-          <div className="bg-white border border-gray-300 rounded-2xl p-6 shadow-lg">
-            <h3 className="text-xl font-semibold text-center mb-3">
-              Confirm Submission
-            </h3>
-            <p className="text-center text-gray-600 mb-6">
-              Are you sure you want to submit your interest?
-            </p>
-            <div className="flex gap-3">
-              <button className="w-full py-2 bg-gray-300 text-black rounded-xl font-medium hover:bg-gray-400 transition">
-                Cancel
-              </button>
-              <button className="w-full py-2 bg-green-600 text-white rounded-xl font-medium hover:bg-green-700 transition">
-                Confirm
-              </button>
-            </div>
-          </div>
-        </div>
+          <button className="w-full bg-green-600 text-white p-3 rounded-xl text-lg hover:bg-green-700 active:scale-95 transition">
+            Add Crop
+          </button>
+        </form>
       </div>
     </div>
   );

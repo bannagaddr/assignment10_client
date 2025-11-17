@@ -1,25 +1,34 @@
-import React, { use } from "react";
+import React, { use, useState } from "react";
 import { AuthContext } from "../contextapis/Context";
 import { Link, useNavigate } from "react-router";
 
 const Registration = () => {
   // destructuring from provider
-  const { registration } = use(AuthContext);
+  const { user, setUser, registration } = use(AuthContext);
   // after registration then go home
   const navigate = useNavigate();
+  const [error, setError] = useState("");
 
   const handleRegistration = (e) => {
     e.preventDefault();
+    setError("");
+
     const name = e.target.name.value;
     const email = e.target.email.value;
-    const photo = e.target.photoUrl.value;
+    const photoURL = e.target.photoUrl.value;
     const password = e.target.password.value;
-    // console.log(name, email, password, photo);
 
-    registration(email, password).then((result) => {
-      console.log(result);
-      navigate("/");
-    });
+    const re = /^(?=.*[A-Z])(?=.*[a-z]).{6,}$/;
+    if (!re.test(password)) {
+      setError(
+        "Password must contain at least 1 uppercase, 1 lowercase and be 6+ characters long."
+      );
+      return; // stop submit
+    }
+
+    registration(name, email, photoURL, password)
+      .then(() => navigate("/"))
+      .catch((err) => setError(err.message));
   };
 
   return (
@@ -75,6 +84,10 @@ const Registration = () => {
               className="input input-bordered w-full"
             />
           </div>
+
+          {error && (
+            <p className="text-red-600 text-sm mt-1 text-center">{error}</p>
+          )}
 
           <button className="btn bg-[#00BF83] w-full mt-4">Register</button>
         </form>

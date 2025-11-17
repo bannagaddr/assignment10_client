@@ -1,14 +1,17 @@
 import React, { use } from "react";
-import { Link } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import { TbLeaf } from "react-icons/tb";
 import { AuthContext } from "../contextapis/Context";
 
 const Navbar = () => {
   const { user, logout } = use(AuthContext);
 
+  // when use logging out then route to login page
+  const navigate = useNavigate();
+
   // logout function
   const handleLogout = () => {
-    logout()
+    logout(() => navigate("/login"))
       .then(() => console.log("Logout"))
       .catch((err) => console.log(err));
   };
@@ -41,22 +44,22 @@ const Navbar = () => {
             {user ? (
               <>
                 <li>
-                  <Link to="/">Home</Link>
+                  <NavLink to="/">Home</NavLink>
                 </li>
                 <li>
-                  <Link to="/all_crop_post">All Crops</Link>
+                  <NavLink to="/all_crop_post">All Crops</NavLink>
                 </li>
                 <li>
-                  <Link to="/profile">Profile</Link>
+                  <NavLink to="/profile">Profile</NavLink>
                 </li>
                 <li>
-                  <Link to="/add-crop">Add Crop</Link>
+                  <NavLink to="/add-crop">Add Crop</NavLink>
                 </li>
                 <li>
-                  <Link to="/my-posts">My Posts</Link>
+                  <NavLink to="/my-posts">My Posts</NavLink>
                 </li>
                 <li>
-                  <Link to="/my-interests">My Interests</Link>
+                  <NavLink to="/my-interests">My Interests</NavLink>
                 </li>
                 <li>
                   <button onClick={handleLogout}>Logout</button>
@@ -65,16 +68,16 @@ const Navbar = () => {
             ) : (
               <>
                 <li>
-                  <Link to="/">Home</Link>
+                  <NavLink to="/">Home</NavLink>
                 </li>
                 <li>
-                  <Link to="/all_crop_post">All Crops</Link>
+                  <NavLink to="/all_crop_post">All Crops</NavLink>
                 </li>
                 <li>
-                  <Link to="/login">Login</Link>
+                  <NavLink to="/login">Login</NavLink>
                 </li>
                 <li>
-                  <Link to="/register">Register</Link>
+                  <NavLink to="/register">Register</NavLink>
                 </li>
               </>
             )}
@@ -92,22 +95,22 @@ const Navbar = () => {
           {user ? (
             <>
               <li>
-                <Link to="/">Home</Link>
+                <NavLink to="/">Home</NavLink>
               </li>
               <li>
-                <Link to="/all_crop_post">All Crops</Link>
+                <NavLink to="/all_crop_post">All Crops</NavLink>
               </li>
               <li>
-                <Link to="/profile">Profile</Link>
+                <NavLink to="/profile">Profile</NavLink>
               </li>
               <li>
-                <Link to="/add-crop">Add Crop</Link>
+                <NavLink to="/add-crop">Add Crop</NavLink>
               </li>
               <li>
-                <Link to="/my-posts">My Posts</Link>
+                <NavLink to="/my-posts">My Posts</NavLink>
               </li>
               <li>
-                <Link to="/my-interests">My Interests</Link>
+                <NavLink to="/my-interests">My Interests</NavLink>
               </li>
               <li>
                 <button onClick={handleLogout}>Logout</button>
@@ -116,16 +119,16 @@ const Navbar = () => {
           ) : (
             <>
               <li>
-                <Link to="/">Home</Link>
+                <NavLink to="/">Home</NavLink>
               </li>
               <li>
-                <Link to="/all_crop_post">All Crops</Link>
+                <NavLink to="/all_crop_post">All Crops</NavLink>
               </li>
               <li>
-                <Link to="/login">Login</Link>
+                <NavLink to="/login">Login</NavLink>
               </li>
               <li>
-                <Link to="/register">Register</Link>
+                <NavLink to="/register">Register</NavLink>
               </li>
             </>
           )}

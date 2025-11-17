@@ -1,38 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
+import { TbInfoCircle } from "react-icons/tb";
 
-const InterestForm = ({ hasSentInterest }) => {
+const InterestForm = ({ data }) => {
+  const [perQuantity, setPerQuantity] = useState(0);
+  const price = data.price;
+
+  const setUserQuantity = (e) => {
+    const userQuantity = e.target.value;
+    const totalPrice = userQuantity * price;
+    setPerQuantity(totalPrice);
+  };
+
   return (
-    <div className="card bg-white shadow-md mb-8 p-6">
-      <h3 className="text-xl font-semibold mb-4">Send Interest</h3>
-      {hasSentInterest ? (
-        <p className="text-red-500">You’ve already sent an interest.</p>
-      ) : (
-        <>
-          <div className="form-control mb-4">
-            <label className="label">
-              <span className="label-text">Quantity</span>
-            </label>
-            <input
-              type="number"
-              placeholder="Quantity"
-              className="input input-bordered w-full"
-            />
-          </div>
-          <div className="form-control mb-4">
-            <label className="label">
-              <span className="label-text">Message</span>
-            </label>
-            <textarea
-              placeholder="Message"
-              className="textarea textarea-bordered w-full"
-            ></textarea>
-          </div>
-          <p className="mb-4">
-            <strong>Total Price:</strong> --
-          </p>
-          <button className="btn btn-success">Submit Interest</button>
-        </>
-      )}
+    <div className="md:w-1/3 bg-white rounded-2xl shadow-xl p-6 md:p-8">
+      <h2 className="text-2xl md:text-3xl font-semibold text-green-800 mb-6 flex items-center gap-3">
+        <TbInfoCircle className="text-green-600 text-3xl md:text-4xl" /> Show
+        Interest
+      </h2>
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col">
+          <label className="font-medium mb-2">Quantity</label>
+          <input
+            onChange={setUserQuantity}
+            type="number"
+            placeholder="Enter quantity"
+            className="input input-bordered w-full"
+          />
+        </div>
+        <div className="flex flex-col">
+          <label className="font-medium mb-2">Message</label>
+          <input
+            type="text"
+            placeholder="Write a message"
+            className="input input-bordered w-full"
+          />
+        </div>
+      </div>
+      <p className="text-gray-700 font-medium mt-4 text-right text-lg">
+        Total Price: ${perQuantity}
+      </p>
+      <button className="btn btn-success w-full mt-6 py-3 text-lg">
+        Submit Interest
+      </button>
     </div>
   );
 };

@@ -5,6 +5,7 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../../data_control/firebase/firebase.config";
 
@@ -13,13 +14,31 @@ const Provider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   // registration function
-  const registration = (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password);
+  const registration = (name, email, photoURL, password) => {
+    return createUserWithEmailAndPassword(auth, email, password).then(
+      (userCredential) => {
+        const user = userCredential.user;
+
+        return updateProfile(user, {
+          displayName: name,
+          photoURL: photoURL,
+        }).then(() => user);
+      }
+    );
   };
 
   // login function
-  const login = (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password);
+  const login = (name, email, photoURL, password) => {
+    return signInWithEmailAndPassword(auth, email, password).then(
+      (userCredential) => {
+        const user = userCredential.user;
+
+        return updateProfile(user, {
+          displayName: name,
+          photoURL: photoURL,
+        }).then(() => user);
+      }
+    );
   };
 
   // log out function
@@ -31,6 +50,7 @@ const Provider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      setLoading(false);
     });
 
     return () => unsubscribe();
