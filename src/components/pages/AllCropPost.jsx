@@ -1,8 +1,43 @@
 import React from "react";
-import { Link, useLoaderData } from "react-router";
+import { Link, useLoaderData, useNavigate } from "react-router";
+import Swal from "sweetalert2";
 
 const AllCropPost = () => {
+  const navigate = useNavigate();
   const allCropsData = useLoaderData();
+  console.log(allCropsData);
+
+  const handleDeleteCorps = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:3000/crops/${id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            navigate("/all_crop_post");
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+          })
+          .catch((error) => console.log(error));
+      }
+    });
+  };
 
   return (
     <div className="min-h-screen px-6 md:px-12 py-12 bg-green-50">
@@ -20,14 +55,14 @@ const AllCropPost = () => {
       </div>
 
       {/* crops card */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {allCropsData.map((data) => (
           <div
             key={data._id}
             className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
           >
             <div className="w-full h-40 bg-gray-300 flex items-center justify-center text-gray-600 font-semibold">
-              <img src={data.photo} alt="" />
+              <img src={data.photo} />
             </div>
             <div className="p-4">
               <h2 className="text-lg font-semibold text-green-800 mb-1">
@@ -45,7 +80,10 @@ const AllCropPost = () => {
               >
                 View Details
               </Link>
-              <button className="btn btn-success mt-3 btn-sm w-full bg-red-600 text-white border-none shadow-none">
+              <button
+                onClick={() => handleDeleteCorps(data._id)}
+                className="btn btn-success mt-3 btn-sm w-full bg-red-600 text-white border-none shadow-none"
+              >
                 Delete
               </button>
             </div>

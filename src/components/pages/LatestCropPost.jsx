@@ -17,7 +17,7 @@ const LatestCropPost = () => {
       </h1>
 
       {/* crops card */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {latestCropsData.map((data) => (
           <div
             key={data._id}
@@ -45,6 +45,11 @@ const LatestCropPost = () => {
             </div>
           </div>
         ))}
+      </div>
+      <div className="flex items-center justify-center mt-10">
+        <Link to={"/all_crop_post"} className="btn btn-success btn-sm">
+          View All
+        </Link>
       </div>
     </div>
   );

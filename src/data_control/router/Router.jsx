@@ -9,7 +9,7 @@ import Login from "../../components/pages/Login";
 import AddCrop from "../../components/pages/AddCrop";
 import CropsDetails from "../../components/pages/CropsDetails";
 import PrivateRouter from "./PrivateRouter";
-import LatestCropPost from "../../components/pages/LatestCropPost";
+import MyPost from "../../components/pages/MyPost";
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +42,14 @@ export const router = createBrowserRouter([
         ),
         loader: ({ params }) =>
           fetch(`http://localhost:3000/crops/${params.id}`),
+      },
+      {
+        path: "/my-post",
+        element: (
+          <PrivateRouter>
+            <MyPost></MyPost>
+          </PrivateRouter>
+        ),
       },
       {
         path: "/register",

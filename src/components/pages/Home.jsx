@@ -4,13 +4,12 @@ import HowItWorks from "./HowItWorks";
 import AgroBlog from "./AgroBlog";
 import FarmersTestimonials from "./FarmersTestimonials";
 import FeaturedCrop from "./FeaturedCrop";
+import HomeSlider from "./HomeSlider";
 
 const Home = () => {
   return (
     <div>
-      <div>
-        <h1>Home</h1>
-      </div>
+      <HomeSlider></HomeSlider>
       <LatestCropPost></LatestCropPost>
       <HowItWorks></HowItWorks>
       <AgroBlog></AgroBlog>

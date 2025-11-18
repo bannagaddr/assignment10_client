@@ -1,9 +1,10 @@
-import React, { use } from "react";
+import React, { use, useRef } from "react";
 import { AuthContext } from "../contextapis/Context";
 import "../../index.css";
 
 const AddCrop = () => {
   const { user } = use(AuthContext);
+  const formRef = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -37,6 +38,9 @@ const AddCrop = () => {
       .then((data) => console.log(data))
       .catch((err) => console.log(err));
     console.log(formData);
+
+    const form = formRef.current;
+    form.reset();
   };
 
   return (
@@ -44,7 +48,7 @@ const AddCrop = () => {
       <div className="w-full max-w-lg bg-white rounded-2xl shadow-lg p-6 space-y-4">
         <h2 className="text-2xl font-semibold text-center">Add New Crop</h2>
 
-        <form onSubmit={handleSubmit} className="grid gap-4">
+        <form ref={formRef} onSubmit={handleSubmit} className="grid gap-4">
           <input
             type="text"
             name="name"
